@@ -22,22 +22,7 @@ export default defineConfig({
   i18n: {
     defaultLocale: 'zh',
     locales: ['zh', 'en', 'fr', 'es', 'ru', 'ja', 'ko', 'pt', 'de', 'id'],
-    fallback: {
-      en: 'zh',
-      fr: 'zh',
-      es: 'zh',
-      ru: 'zh',
-      ja: 'zh',
-      ko: 'zh',
-      pt: 'zh',
-      de: 'zh',
-      id: 'zh',
-    },
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
-      fallbackType: 'rewrite',
-    },
+    routing: 'manual',
   },
 
   image: {

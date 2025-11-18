@@ -7,6 +7,9 @@ import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS, toAbsolute } from '@/utils/i18n';
 
 export async function getStaticPaths() {
+  const FLAG = '__I18N_404_GENERATED__';
+  if (process.env[FLAG]) return [];
+  process.env[FLAG] = 'true';
   return SUPPORTED_LANGS.map((lang) => ({ params: { lang } }));
 }
 
