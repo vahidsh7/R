@@ -1,14 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
+import fallbackAvatar from '@/assets/author.avif';
+import OptimizedPicture from '@/features/OptimizedPicture.astro';
 import LandingLayout from '@/layouts/LandingLayout.astro';
-import LatestList from '@/widgets/LatestList.astro';
-import GitHubActivityCalendar from '@/widgets/GitHubActivityCalendar.astro';
-import { Icon } from 'astro-icon/components';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
 import { t } from '@/utils/translations';
-import OptimizedPicture from '@/features/OptimizedPicture.astro';
-import fallbackAvatar from '@/assets/author.avif';
+import GitHubActivityCalendar from '@/widgets/GitHubActivityCalendar.astro';
+import LatestList from '@/widgets/LatestList.astro';
+import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   return SUPPORTED_LANGS.map((lang) => ({ params: { lang } }));
@@ -62,61 +62,69 @@ const githubUsername = githubUsernameFromSocials(socials);
   canonical={Astro.url.href}
   image={avatar}
   imageAlt={authorName}
-  centered={false}
 >
-  <section class="rounded-xl bg-white/70 p-5 shadow-sm backdrop-blur sm:p-6 dark:bg-neutral-900/70">
-    <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-6">
-      <div class="shrink-0">
-        <OptimizedPicture
-          src={avatar}
-          alt={authorName}
-          width={128}
-          height={128}
-          class="h-28 w-28 rounded-full object-cover ring-1 ring-black/5 sm:h-32 sm:w-32 dark:ring-white/10"
-          layout="fixed"
-          fit="cover"
-        />
-      </div>
-      <div class="w-full">
-        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{authorName}</h2>
-        <p class="mt-2 text-sm tracking-wide text-neutral-500 uppercase dark:text-neutral-400">
-          {lang === 'zh' ? '简介' : 'Bio'}
-        </p>
-        <p class="mt-1 text-neutral-700 dark:text-neutral-300">{description}</p>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <section class="rounded-3xl bg-white/80 p-8 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-300 hover:shadow-xl hover:shadow-black/10 sm:p-12 lg:p-16 dark:bg-neutral-900/80 dark:shadow-white/5 dark:hover:shadow-white/10">
+      <div class="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:gap-12">
+        <div class="shrink-0">
+          <OptimizedPicture
+            src={avatar}
+            alt={authorName}
+            width={160}
+            height={160}
+            class="h-32 w-32 rounded-full object-cover ring-2 ring-neutral-200 sm:h-40 sm:w-40 dark:ring-neutral-700"
+            layout="fixed"
+            fit="cover"
+          />
+        </div>
 
-        <div class="mt-4 flex items-center gap-6 text-sm">
+        <div class="w-full text-center sm:text-left">
+          <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            {authorName}
+          </h1>
+          <p class="mt-6 text-lg leading-relaxed text-neutral-600 sm:text-xl dark:text-neutral-400">
+            {description}
+          </p>
+
           {
-            socials.map((s) => (
-              <a
-                href={s.url}
-                target={s.url.startsWith('http') ? '_blank' : undefined}
-                rel={s.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                class="inline-flex items-center gap-1 text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
-              >
-                <span aria-hidden="true">
-                  <Icon name={iconFor(s.label, s.url)} class="h-5 w-5" />
-                </span>
-                <span class="sr-only">{s.label}</span>
-              </a>
-            ))
+            socials.length > 0 && (
+              <div class="mt-8 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+                {socials.map((s) => (
+                  <a
+                    href={s.url}
+                    target={s.url.startsWith('http') ? '_blank' : undefined}
+                    rel={s.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    class="group inline-flex items-center gap-2 rounded-full bg-neutral-100 px-5 py-2.5 text-sm font-medium text-neutral-700 transition-all duration-200 hover:scale-105 hover:bg-neutral-900 hover:text-white hover:shadow-lg dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-white dark:hover:text-neutral-900"
+                  >
+                    <Icon
+                      name={iconFor(s.label, s.url)}
+                      class="h-5 w-5 transition-transform duration-200 group-hover:scale-110"
+                    />
+                    <span>{s.label}</span>
+                  </a>
+                ))}
+              </div>
+            )
           }
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  {
-    githubUsername && (
-      <section class="mt-10 rounded-xl bg-white/70 p-5 shadow-sm backdrop-blur sm:p-6 dark:bg-neutral-900/70">
-        <h3 class="mb-3 text-base font-medium text-neutral-600 dark:text-neutral-300">
-          {t(lang, 'pages.author.writingActivity')}
-        </h3>
-        <GitHubActivityCalendar username=idimilabs repo="idimilabs/Astrology-i18n" />
-      </section>
-    )
-  }
+    {
+      githubUsername && (
+        <section class="mt-16">
+          <h2 class="mb-8 text-3xl font-bold tracking-tight sm:text-4xl">
+            {t(lang, 'pages.author.writingActivity')}
+          </h2>
+          <div class="overflow-x-auto rounded-3xl bg-white/80 p-6 shadow-lg shadow-black/5 backdrop-blur-xl sm:p-8 dark:bg-neutral-900/80 dark:shadow-white/5">
+            <GitHubActivityCalendar username=idimilabs repo="idimilabs/Astrology-i18n" />
+          </div>
+        </section>
+      )
+    }
 
-  <LatestList lang={lang} class="mt-10" />
+    <LatestList lang={lang} class="mt-12" />
+  </div>
 </LandingLayout>
 
 <script

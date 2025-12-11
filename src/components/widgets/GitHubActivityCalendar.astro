@@ -409,7 +409,6 @@ function getMonthLabels(
 
 const { username, year = 'last', repo } = Astro.props;
 
-
 function makeEmptyLastYear(): GitHubActivityApiResponse {
   const today = new Date();
   const start = subWeeks(today, 52);
@@ -467,14 +466,21 @@ const width = weeks.length * (blockSize + blockMargin) - blockMargin;
 const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin;
 ---
 
-<article id="github-activity-calendar" class="flex w-max max-w-full flex-col gap-2 text-sm">
+<article id="github-activity-calendar" class="flex w-full flex-col gap-2 text-sm">
   <div
-    class="max-w-full overflow-x-auto pt-0.5"
+    class="w-full overflow-x-auto pt-0.5"
     style={{
       scrollbarGutter: 'stable',
     }}
   >
-    <svg class="visible block" width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <svg
+      class="visible block w-full"
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      style={`min-width: ${width}px;`}
+      preserveAspectRatio="xMinYMin meet"
+    >
       {
         !hideMonthLabels && (
           <g>
