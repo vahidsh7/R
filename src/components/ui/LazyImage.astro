@@ -92,7 +92,6 @@ const containerId = `lazy-img-${Math.random().toString(36).substring(2, 9)}`;
     opacity: 1;
   }
 
-  /* 尊重用户的运动偏好 */
   @media (prefers-reduced-motion: reduce) {
     .lazy-image {
       transition: opacity 50ms ease-out;
@@ -101,7 +100,6 @@ const containerId = `lazy-img-${Math.random().toString(36).substring(2, 9)}`;
 </style>
 
 <script>
-  // 客户端脚本：监听图片加载完成
   document.addEventListener('DOMContentLoaded', () => {
     const lazyImages = document.querySelectorAll<HTMLImageElement>('.lazy-image');
 
@@ -111,10 +109,8 @@ const containerId = `lazy-img-${Math.random().toString(36).substring(2, 9)}`;
       };
 
       if (img.complete) {
-        // 如果图片已经加载完成（从缓存）
         loadImage();
       } else {
-        // 监听加载完成事件
         img.addEventListener('load', loadImage);
       }
     });

@@ -13,21 +13,16 @@ const { aspectClass = 'aspect-[16/9]', class: className = '' } = Astro.props as 
   class={`relative overflow-hidden rounded-xl ${aspectClass} ${className}`.trim()}
   aria-label="加载中..."
 >
-  <!-- 图片骨架 -->
   <Skeleton variant="image" class="absolute inset-0 h-full w-full" rounded={false} />
 
-  <!-- 渐变遮罩 -->
   <div class="absolute inset-0 bg-gradient-to-b from-black/5 via-black/20 to-black/40"></div>
 
-  <!-- 底部内容骨架 -->
   <div class="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-    <!-- 日期和分类骨架 -->
     <div class="flex items-center justify-between">
       <Skeleton variant="line" width="80px" height="14px" />
       <Skeleton variant="line" width="60px" height="14px" />
     </div>
 
-    <!-- 标题骨架 (2行) -->
     <div class="mt-4 space-y-2">
       <Skeleton variant="title" width="100%" height="20px" />
       <Skeleton variant="title" width="75%" height="20px" />
