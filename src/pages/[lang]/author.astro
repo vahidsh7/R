@@ -125,8 +125,8 @@ const years = [currentYear, currentYear - 1, currentYear - 2];
                 </h2>
               </div>
 
-              <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
-                <div class="flex-1">
+              <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-6">
+                <div class="min-w-0 flex-1">
                   <div class="relative">
                     {years.map((year) => (
                       <div data-calendar-year={year} class={year === currentYear ? '' : 'hidden'}>
@@ -140,16 +140,16 @@ const years = [currentYear, currentYear - 1, currentYear - 2];
                   </div>
                 </div>
 
-                <div class="w-full max-w-md lg:w-auto lg:min-w-[9rem]">
+                <div class="shrink-0">
                   <div
-                    class="flex flex-row flex-wrap items-center justify-start gap-2 overflow-x-auto text-neutral-700 lg:flex-col lg:items-stretch lg:overflow-visible dark:text-neutral-200"
+                    class="flex flex-row flex-wrap items-center justify-start gap-2 text-neutral-700 lg:flex-col lg:items-end lg:gap-2.5 dark:text-neutral-200"
                     id="year-selector"
                   >
                     {years.map((year) => (
                       <button
                         type="button"
                         data-year={year}
-                        class={`group inline-flex min-w-[70px] items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+                        class={`group inline-flex min-w-[70px] items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 ${
                           year === currentYear
                             ? '-translate-y-px bg-neutral-900 text-white shadow-lg ring-1 shadow-neutral-900/10 ring-neutral-900/40 dark:bg-white dark:text-neutral-900 dark:shadow-white/10 dark:ring-white/30'
                             : 'text-neutral-600 ring-1 ring-neutral-200 hover:-translate-y-px hover:bg-neutral-900/5 dark:text-neutral-400 dark:ring-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-white'
