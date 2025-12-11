@@ -124,12 +124,12 @@ async function fetchData(
       }
 
       const query = `
-        query($owner: String!, $name: String!, $since: GitTimestamp, $until: GitTimestamp) {
+        query($owner: String!, $name: String!, $since: GitTimestamp, $until: GitTimestamp, $after: String) {
           repository(owner: $owner, name: $name) {
             defaultBranchRef {
               target {
                 ... on Commit {
-                  history(first: 100, since: $since, until: $until) {
+                  history(first: 100, since: $since, until: $until, after: $after) {
                     edges {
                       node {
                         committedDate
@@ -155,8 +155,10 @@ async function fetchData(
       const commitsByDate = new Map<string, number>();
       let hasNextPage = true;
       let endCursor: string | null = null;
+      let pageCount = 0;
+      const MAX_PAGES = 10; // 最多查询 10 页(1000 条提交)
 
-      while (hasNextPage) {
+      while (hasNextPage && pageCount < MAX_PAGES) {
         const res = await fetchWithTimeout('https://api.github.com/graphql', {
           method: 'POST',
           headers: {
@@ -172,9 +174,10 @@ async function fetchData(
               name,
               since: from.toISOString(),
               until: to.toISOString(),
+              after: endCursor,
             },
           }),
-          timeoutMs: 6000,
+          timeoutMs: 30000,
         });
 
         const out = await res.json();
@@ -200,6 +203,7 @@ async function fetchData(
 
         hasNextPage = history.pageInfo.hasNextPage;
         endCursor = history.pageInfo.endCursor;
+        pageCount++;
 
         if (!hasNextPage) break;
       }
@@ -259,7 +263,7 @@ async function fetchData(
         query,
         variables: { login: username, from: from.toISOString(), to: to.toISOString() },
       }),
-      timeoutMs: 6000,
+      timeoutMs: 30000,
     });
     const out = await res.json();
     if (!res.ok || out.errors) {
@@ -312,7 +316,7 @@ async function fetchData(
   }
   const apiUrl = 'https://github-contributions-api.jogruber.de/v4/';
   const response = await fetchWithTimeout(`${apiUrl}${username}?y=${String(year)}`, {
-    timeoutMs: 6000,
+    timeoutMs: 30000,
   });
   const data = (await response.json()) as GitHubActivityApiResponse;
   if (!response.ok) {
@@ -524,16 +528,10 @@ const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin;
   </div>
   {
     !(hideTotalCount && hideColorLegend) && (
-      <footer class="flex flex-col gap-x-1 gap-y-2 sm:flex-row sm:justify-between">
-        {!hideTotalCount && (
-          <div>
-            {labels.totalCount
-              ? labels.totalCount
-                  .replace('{{count}}', String(totalCount))
-                  .replace('{{year}}', String(activityYear))
-              : `${totalCount} activities in ${activityYear}`}
-          </div>
-        )}
+      <footer
+        class="flex flex-col-reverse gap-y-2 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between dark:text-neutral-400"
+        style={{ width: `${width}px` }}
+      >
         {!hideColorLegend && (
           <div class="flex items-center gap-[3px]">
             <span class="mr-1.5">{labels.legend.less}</span>
@@ -550,6 +548,15 @@ const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin;
               </svg>
             ))}
             <span class="ml-1.5">{labels.legend.more}</span>
+          </div>
+        )}
+        {!hideTotalCount && (
+          <div class="self-end sm:self-auto">
+            {labels.totalCount
+              ? labels.totalCount
+                  .replace('{{count}}', String(totalCount))
+                  .replace('{{year}}', String(activityYear))
+              : `${totalCount} activities in ${activityYear}`}
           </div>
         )}
       </footer>
