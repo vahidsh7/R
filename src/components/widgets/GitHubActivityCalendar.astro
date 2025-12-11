@@ -528,7 +528,10 @@ const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin;
   </div>
   {
     !(hideTotalCount && hideColorLegend) && (
-      <footer class="flex flex-col-reverse gap-y-2 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between dark:text-neutral-400">
+      <footer
+        class="flex flex-col gap-y-2 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between dark:text-neutral-400"
+        style={`max-width: ${width}px;`}
+      >
         {!hideColorLegend && (
           <div class="flex items-center gap-[3px]">
             <span class="mr-1.5">{labels.legend.less}</span>
@@ -548,7 +551,7 @@ const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin;
           </div>
         )}
         {!hideTotalCount && (
-          <div class="self-end sm:self-auto">
+          <div>
             {labels.totalCount
               ? labels.totalCount
                   .replace('{{count}}', String(totalCount))
