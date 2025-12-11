@@ -1,7 +1,6 @@
 ---
 name: "Astro"
 bio: "在生活的海洋，创业的波涛和投资的迷雾中前行"
-avatar: "@/assets/author.avif"
 socials:
   - { label: "X", url: "https://x.com/inotelabs" }
   - { label: "GitHub", url: "https://github.com/inotelabs" }

@@ -1,7 +1,6 @@
 ---
 name: "Astro"
 bio: "Sailing through life, entrepreneurship waves, and investing fog."
-avatar: "@/assets/author.avif"
 socials:
   - { label: "X", url: "https://x.com/inotelabs" }
   - { label: "GitHub", url: "https://github.com/inotelabs" }

@@ -38,7 +38,7 @@ const author = defineCollection({
   schema: z.object({
     name: z.string(),
     bio: z.string().default(''),
-    avatar: z.string().url().optional(),
+    avatar: z.string().optional(),
     socials: z
       .array(
         z.object({
