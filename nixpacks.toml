@@ -3,19 +3,19 @@
 nixPkgs = ["nodejs_23"]
 
 [phases.install]
-# 直接 npm ci 即可，因为 edgeone 已经在 devDependencies 中
+# 直接安装依赖，edgeone 已在 package.json 的 devDependencies 中
 cmds = ["npm ci"]
 
 [phases.build]
-# 1. 执行 Astro 构建
-# 2. 拷贝 package.json 到 dist（EdgeOne 部署规范要求）
-# 3. 执行部署命令，使用环境变量注入
+# 1. 编译项目
+# 2. 拷贝 package.json（EdgeOne 规范）
+# 3. 增量部署：去掉了 --force，CLI 会自动进行文件哈希比对
 cmds = [
     "npm run build",
     "cp package.json ./dist/",
-    "npx edgeone pages deploy ./dist -n $EDGEONE_PROJECT_NAME -t $EDGEONE_API_TOKEN --force"
+    "npx edgeone pages deploy ./dist -n $EDGEONE_PROJECT_NAME -t $EDGEONE_API_TOKEN"
 ]
 
 [start]
-# 构建成功启动状态监控面板
+# 启动轻量级监控面板
 cmd = "node deploy-wrapper.cjs"
