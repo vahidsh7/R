@@ -46,18 +46,15 @@ Scores vary by content and network; treat as indicative.
 
 ## Quick Start
 
-Requirements: Node.js 20+, pnpm or npm.
-
-```bash
 # Install
-npm install
+pnpm install
 
 # Develop (http://localhost:4321)
-npm run dev
+pnpm run dev
 
 # Build & preview
-npm run build
-npm run preview
+pnpm run build
+pnpm run preview
 ```
 
 ## Project Structure
