@@ -3,6 +3,7 @@ import Header from '@/ui/Header.astro';
 import Footer from '@/ui/Footer.astro';
 import GTMHead from '@/analytics/GTMHead.astro';
 import GTMBody from '@/analytics/GTMBody.astro';
+import DynamicGlass from '@/features/DynamicGlass.astro';
 import type { Lang } from '@/utils/i18n';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
@@ -15,10 +16,11 @@ const { lang: langProp = 'zh' } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (langProp as Lang | undefined) ??
   'zh') as Lang;
+const dir = resolvedLang === 'ar' ? 'rtl' : 'ltr';
 ---
 
 <!doctype html>
-<html lang={resolvedLang} class="scroll-pt-16">
+<html lang={resolvedLang} dir={dir} class="scroll-pt-16">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,12 +28,12 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
     <slot name="head" />
     <GTMHead />
     <ClientRouter />
-    <script src="../utils/page-init.ts"></script>
     <script src="../utils/image-fade-in.ts"></script>
   </head>
   <body class="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
     <div class="flex min-h-dvh flex-col">
       <Header lang={resolvedLang} />
+      <slot name="hero" />
       <main id="main" class="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-5 md:px-6">
         <slot />
       </main>
@@ -39,5 +41,6 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
       <slot name="after" />
     </div>
     <GTMBody />
+    <DynamicGlass />
   </body>
 </html>

@@ -88,7 +88,7 @@ class ImageFadeIn {
     }
 
     private isWithinAnimatedContainer(element: HTMLElement): boolean {
-        // 检查元素是否在已标记淡入的卡片容器内
+        // Check if element is within a card container that has already been marked for fade-in
         const container = element.closest('.grid > div, .group, .curriculum-item, .architecture-layer, [data-card-container]');
         return !!(container && container.hasAttribute('data-fade-observed'));
     }
@@ -106,7 +106,7 @@ class ImageFadeIn {
         containers.forEach((container) => {
             if (this.observedElements.has(container)) return;
 
-            // 检查是否在屏幕内,屏幕内的不需要动画
+            // Check if in viewport, elements in viewport don't need animation
             const rect = container.getBoundingClientRect();
             const isInViewport = (
                 rect.top >= 0 &&
@@ -119,7 +119,7 @@ class ImageFadeIn {
                 return;
             }
 
-            // 标记容器为卡片容器
+            // Mark container as card container
             container.setAttribute('data-card-container', 'true');
 
             this.observedElements.add(container);
@@ -146,7 +146,7 @@ class ImageFadeIn {
             // Skip if already observed
             if (this.observedElements.has(img)) return;
 
-            // 新增: 如果在已动画的容器内,跳过
+            // Skip if within an already animated container
             if (this.isWithinAnimatedContainer(img)) {
                 this.observedElements.add(img);
                 img.setAttribute('data-fade-observed', 'true');
@@ -272,7 +272,7 @@ class ImageFadeIn {
         textElements.forEach((element) => {
             if (this.observedElements.has(element)) return;
 
-            // 新增: 如果在已动画的容器内,跳过
+            // Skip if within an already animated container
             if (this.isWithinAnimatedContainer(element)) {
                 this.observedElements.add(element);
                 element.setAttribute('data-fade-observed', 'true');
@@ -282,13 +282,13 @@ class ImageFadeIn {
             this.observedElements.add(element);
             element.setAttribute('data-fade-observed', 'true');
 
-            // 检查是否在文章内容区 - 文章区所有文字都不淡入
+            // Check if in article content area - all text in article area should not fade in
             const isInArticle = element.closest('.prose, [data-article-content]');
             if (isInArticle) {
-                return; // 文章内容区的所有文字元素都不淡入
+                return; // Text elements in article content area should not fade in
             }
 
-            // 检查导航区域
+            // Check navigation area
             const parent = element.closest('header, nav, footer, [role="navigation"]');
             if (parent) {
                 return;
@@ -436,7 +436,7 @@ if (typeof window !== 'undefined') {
                 respectMotionPreference: true,
             });
 
-            // 返回清理函数
+            // Return cleanup function
             return () => {
                 fadeInInstance.destroy();
             };

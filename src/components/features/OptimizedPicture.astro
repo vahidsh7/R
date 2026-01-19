@@ -51,15 +51,36 @@ const isRemote = typeof src === 'string' && /^(https?:)?\/\/.*/.test(src);
 
 const shouldInfer = inferSize ?? isRemote;
 
+// CSS object-fit and object-position styles (ensure proper browser-side cropping)
+const fitClass =
+  fit === 'cover'
+    ? 'object-cover'
+    : fit === 'contain'
+      ? 'object-contain'
+      : fit === 'fill'
+        ? 'object-fill'
+        : '';
+const positionClass =
+  position === 'center'
+    ? 'object-center'
+    : position === 'top'
+      ? 'object-top'
+      : position === 'bottom'
+        ? 'object-bottom'
+        : '';
+
 const roundedForImg = rounded ? 'rounded-lg' : '';
 const roundedForPicture = rounded ? 'rounded-lg overflow-hidden' : '';
-const imgClass = [className, roundedForImg].filter(Boolean).join(' ');
-const pictureClass = [className, roundedForPicture].filter(Boolean).join(' ');
+const imgClass = [className, fitClass, positionClass, roundedForImg].filter(Boolean).join(' ');
+const pictureClass = [className, fitClass, positionClass, roundedForPicture]
+  .filter(Boolean)
+  .join(' ');
 
-const resolvedLoading = priority ? 'eager' : loading ?? 'lazy';
-const resolvedDecoding = decoding ?? 'async';
-const resolvedFetchpriority =
-  priority ? 'high' : fetchpriority ?? (resolvedLoading === 'lazy' ? 'low' : 'auto');
+const resolvedLoading = priority ? 'eager' : (loading ?? 'lazy');
+const resolvedDecoding = decoding ?? (priority ? 'sync' : 'async');
+const resolvedFetchpriority = priority
+  ? 'high'
+  : (fetchpriority ?? (resolvedLoading === 'lazy' ? 'low' : 'auto'));
 
 const baseImgProps = {
   alt,

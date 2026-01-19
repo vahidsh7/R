@@ -21,7 +21,7 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
         <h3 class="mb-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
           <a
             href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
-            class="no-underline hover:no-underline focus:no-underline"
+            class="-ml-2 rounded-md px-2 py-1 transition-all hover:bg-black/10 hover:text-black focus:no-underline dark:hover:bg-white/10 dark:hover:text-white"
           >
             {t(resolvedLang, `navigation.${item.key}`)}
           </a>
@@ -31,7 +31,7 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
             <li>
               <a
                 href={getRelativeLocaleUrl(resolvedLang, `/tags/${tag}`)}
-                class="text-sm text-neutral-600 no-underline hover:text-neutral-900 hover:no-underline focus:no-underline dark:text-neutral-300 dark:hover:text-white"
+                class="-ml-2 block w-fit rounded-md px-2 py-0.5 text-sm text-neutral-600 transition-all hover:bg-black/10 hover:text-black dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
               >
                 {t(resolvedLang, `tags.${tag}`)}
               </a>
@@ -50,7 +50,7 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
       <li>
         <a
           href={getRelativeLocaleUrl(resolvedLang, '/category')}
-          class="text-sm text-neutral-600 no-underline hover:text-neutral-900 hover:no-underline focus:no-underline dark:text-neutral-300 dark:hover:text-white"
+          class="-ml-2 block w-fit rounded-md px-2 py-0.5 text-sm text-neutral-600 transition-all hover:bg-black/5 hover:text-black dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
         >
           {t(resolvedLang, 'footer.categories')}
         </a>
@@ -58,7 +58,7 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
       <li>
         <a
           href={getRelativeLocaleUrl(resolvedLang, '/tags')}
-          class="text-sm text-neutral-600 no-underline hover:text-neutral-900 hover:no-underline focus:no-underline dark:text-neutral-300 dark:hover:text-white"
+          class="-ml-2 block w-fit rounded-md px-2 py-0.5 text-sm text-neutral-600 transition-all hover:bg-black/5 hover:text-black dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
         >
           {t(resolvedLang, 'footer.tags')}
         </a>
@@ -66,7 +66,7 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
       <li>
         <a
           href={getRelativeLocaleUrl(resolvedLang, '/author')}
-          class="text-sm text-neutral-600 no-underline hover:text-neutral-900 hover:no-underline focus:no-underline dark:text-neutral-300 dark:hover:text-white"
+          class="-ml-2 block w-fit rounded-md px-2 py-0.5 text-sm text-neutral-600 transition-all hover:bg-black/5 hover:text-black dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
         >
           {t(resolvedLang, 'footer.author')}
         </a>

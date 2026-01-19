@@ -7,6 +7,8 @@ import MainNav from '@/ui/MainNav.astro';
 import MobileNav from '@/ui/MobileNav.astro';
 import { Icon } from 'astro-icon/components';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { Image } from 'astro:assets';
+import logo from '@/assets/logo.svg';
 
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (Astro.props.lang as Lang | undefined) ??
@@ -15,16 +17,15 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
 const siteName = t(resolvedLang, 'site.name');
 ---
 
-<header class="w-full bg-white dark:bg-neutral-950">
+<header class="header-glass w-full">
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <div class="grid h-14 grid-cols-[1fr_auto_1fr] items-center gap-3">
       <a
         href={getRelativeLocaleUrl(resolvedLang, '/')}
-        class="flex items-center gap-2 justify-self-start text-xl font-semibold tracking-tight text-neutral-900 hover:opacity-90 dark:text-neutral-100"
+        class="flex items-center gap-2.5 justify-self-start text-xl font-semibold tracking-tight hover:opacity-90"
       >
-        <span
-          class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-xl text-transparent"
-        >
+        <Image src={logo} alt="Logo" class="h-6 w-6" loading="eager" />
+        <span class="text-xl text-neutral-900 dark:text-neutral-100">
           {siteName}
         </span>
       </a>
@@ -35,10 +36,12 @@ const siteName = t(resolvedLang, 'site.name');
 
       <div class="flex items-center gap-2 justify-self-end">
         <a
-          href={getRelativeLocaleUrl(resolvedLang, '/search')}
-          aria-label="Search"
-          title={t(resolvedLang, 'search.title')}
-          class="rounded-md p-2 text-neutral-600 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800"
+          href="https://chat.idimi.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t(resolvedLang, 'chat.title')}
+          title={t(resolvedLang, 'chat.title')}
+          class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-black/5 hover:text-black dark:text-neutral-300 dark:hover:bg-white/10 dark:hover:text-white"
         >
           <Icon name="lucide:search" />
         </a>
@@ -49,7 +52,7 @@ const siteName = t(resolvedLang, 'site.name');
 
         <button
           type="button"
-          class="rounded-md p-2 text-neutral-700 hover:bg-neutral-100 lg:hidden dark:text-neutral-300 dark:hover:bg-neutral-800"
+          class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-black/5 hover:text-black lg:hidden dark:text-neutral-300 dark:hover:bg-white/10 dark:hover:text-white"
           aria-label="Menu"
           data-mobile-trigger
         >
@@ -65,22 +68,20 @@ const siteName = t(resolvedLang, 'site.name');
 <script>
   import { registerPageInit } from '@/utils/page-init';
 
-  function handleMobileToggle() {
-    const panel = document.querySelector('[data-mobile-panel]');
-    if (panel) panel.classList.toggle('hidden');
-  }
-
-  function initMobileMenu() {
+  registerPageInit('mobileMenu', () => {
     const btn = document.querySelector('[data-mobile-trigger]');
     if (!btn) return;
 
-    btn.removeEventListener('click', handleMobileToggle);
+    function handleMobileToggle() {
+      const panel = document.querySelector('[data-mobile-panel]');
+      if (panel) panel.classList.toggle('hidden');
+    }
+
     btn.addEventListener('click', handleMobileToggle);
 
+    // Return cleanup function
     return () => {
       btn.removeEventListener('click', handleMobileToggle);
     };
-  }
-
-  registerPageInit('mobileMenu', initMobileMenu);
+  });
 </script>

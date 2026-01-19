@@ -12,6 +12,7 @@ const { lang, class: className } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (lang as Lang | undefined) ??
   'zh') as Lang;
+const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
 
 const THEME_OPTIONS = [
   { value: 'light', label: t(resolvedLang, 'theme.light'), icon: 'lucide:sun' },
@@ -33,7 +34,7 @@ const THEME_OPTIONS = [
   </summary>
 
   <div
-    class="absolute top-full left-1/2 z-50 mt-1 min-w-40 -translate-x-1/2 rounded-md border border-neutral-200/70 bg-white py-1.5 shadow-lg dark:border-neutral-800/70 dark:bg-neutral-900"
+    class="nav-dropdown absolute top-full left-1/2 z-50 mt-1 min-w-40 -translate-x-1/2 rounded-lg py-1.5 shadow-xl"
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="theme-menu-button"
@@ -42,7 +43,7 @@ const THEME_OPTIONS = [
       THEME_OPTIONS.map((option) => (
         <button
           type="button"
-          class="flex w-full items-center gap-2 px-2.5 py-1.5 text-left text-sm hover:bg-neutral-50 focus:bg-neutral-50 focus:outline-none dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+          class={`flex w-full items-center gap-2 rounded-sm px-2.5 py-1.5 ${alignmentClass} text-sm text-neutral-700 transition-colors hover:bg-black/20 hover:text-black focus:bg-black/20 focus:outline-none dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white dark:focus:bg-white/15`}
           role="menuitem"
           data-theme-option={option.value}
           aria-pressed={false}
@@ -58,12 +59,12 @@ const THEME_OPTIONS = [
 <script>
   import { registerPageInit } from '@/utils/page-init';
 
-  function initThemeSwitcher() {
+  registerPageInit('themeSwitcher', () => {
     const themeRoot = document.querySelector('[data-theme-root]');
     const themeIcon = document.querySelector('[data-theme-icon]');
     const themeButtons = document.querySelectorAll('[data-theme-option]');
 
-    if (!themeRoot || !themeIcon || themeButtons.length === 0) return;
+    if (!themeRoot || !themeIcon || !themeButtons.length) return;
 
     function updateIcon(theme: 'light' | 'dark') {
       const icons = themeIcon?.querySelectorAll('svg');
@@ -120,39 +121,34 @@ const THEME_OPTIONS = [
       }
     }
 
-    // 移除旧的事件监听器
-    themeButtons.forEach((button) => {
-      button.removeEventListener('click', handleThemeChange);
-    });
-
-    const storedPref = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
-    const initialTheme: 'light' | 'dark' | 'system' = storedPref ?? 'system';
-    setTheme(initialTheme);
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleMediaChange = () => {
+    // Handle system theme changes
+    const systemThemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleSystemThemeChange = () => {
       if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
-        const newTheme = mediaQuery.matches ? 'dark' : 'light';
+        const newTheme = systemThemeMediaQuery.matches ? 'dark' : 'light';
         applyTheme(newTheme);
       }
     };
 
-    mediaQuery.addEventListener('change', handleMediaChange);
+    // Initialize theme
+    const storedPref = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
+    const initialTheme: 'light' | 'dark' | 'system' = storedPref ?? 'system';
+    setTheme(initialTheme);
 
+    // Bind events
+    systemThemeMediaQuery.addEventListener('change', handleSystemThemeChange);
     themeButtons.forEach((button) => {
       button.addEventListener('click', handleThemeChange);
     });
 
-    // 返回清理函数
+    // Return cleanup function
     return () => {
-      mediaQuery.removeEventListener('change', handleMediaChange);
+      systemThemeMediaQuery.removeEventListener('change', handleSystemThemeChange);
       themeButtons.forEach((button) => {
         button.removeEventListener('click', handleThemeChange);
       });
     };
-  }
-
-  registerPageInit('themeSwitcher', initThemeSwitcher);
+  });
 </script>
 
 <style>

@@ -156,7 +156,7 @@ async function fetchData(
       let hasNextPage = true;
       let endCursor: string | null = null;
       let pageCount = 0;
-      const MAX_PAGES = 10; // 最多查询 10 页(1000 条提交)
+      const MAX_PAGES = 10; // Max 10 pages query (1000 commits)
 
       while (hasNextPage && pageCount < MAX_PAGES) {
         const res = await fetchWithTimeout('https://api.github.com/graphql', {

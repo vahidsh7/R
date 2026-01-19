@@ -12,23 +12,24 @@ const { lang, class: className } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (lang as Lang | undefined) ??
   'zh') as Lang;
+const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
 ---
 
-<div class={`lg:hidden hidden ${className ?? ''}`.trim()} data-mobile-panel>
-  <div class="mx-auto max-w-6xl px-4 py-2 sm:px-6">
+<div class={`lg:hidden hidden glass ${className ?? ''}`.trim()} data-mobile-panel>
+  <div class="mx-auto max-w-6xl px-4 py-3 sm:px-6">
     <div class="space-y-2">
       {
         NAV_ITEMS.map((item, i) =>
           item.tags && item.tags.length > 0 ? (
-            <div class="overflow-hidden rounded-md border border-neutral-200/70 dark:border-neutral-800/70">
+            <div class="overflow-hidden rounded-lg border border-white/10">
               <button
                 type="button"
-                class="flex w-full items-center justify-between bg-neutral-50/60 px-3 py-2 text-left text-sm font-semibold text-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-100"
+                class={`flex w-full items-center justify-between bg-white/5 px-3 py-2.5 ${alignmentClass} text-sm font-semibold text-neutral-100`}
                 data-accordion-trigger={`m-${i}`}
               >
                 <span>{t(resolvedLang, `navigation.${item.key}`)}</span>
                 <svg
-                  class="h-4 w-4 text-neutral-500"
+                  class="h-4 w-4 text-neutral-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -40,18 +41,18 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
                   />
                 </svg>
               </button>
-              <div class="hidden px-3 py-2" data-accordion-panel={`m-${i}`}>
+              <div class="hidden bg-white/5 px-3 py-2" data-accordion-panel={`m-${i}`}>
                 <a
                   href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
-                  class="block rounded px-2 py-1.5 text-sm text-neutral-700 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                  class="block rounded px-2 py-1.5 text-sm text-neutral-300 transition-colors hover:bg-white/10 hover:text-white"
                 >
                   {t(resolvedLang, `navigation.${item.key}`)}
                 </a>
-                <div class="mt-1 space-y-1 border-t border-neutral-200/60 pt-2 dark:border-neutral-800/60">
+                <div class="mt-1 space-y-1 border-t border-white/10 pt-2">
                   {item.tags.map((tag) => (
                     <a
                       href={getRelativeLocaleUrl(resolvedLang, `/tags/${tag}`)}
-                      class="block rounded px-2 py-1.5 text-sm text-neutral-700 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                      class="block rounded px-2 py-1.5 text-sm text-neutral-300 transition-colors hover:bg-white/10 hover:text-white"
                     >
                       {t(resolvedLang, `tags.${tag}`)}
                     </a>
@@ -62,7 +63,7 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
           ) : (
             <a
               href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
-              class="block rounded-md border border-neutral-200/70 bg-white px-3 py-2 text-sm font-semibold text-neutral-800 hover:bg-neutral-50 dark:border-neutral-800/70 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800"
+              class="block rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm font-semibold text-neutral-100 transition-colors hover:bg-white/10"
             >
               {t(resolvedLang, `navigation.${item.key}`)}
             </a>
@@ -76,38 +77,29 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
 <script>
   import { registerPageInit } from '@/utils/page-init';
 
-  function handleAccordionClick(e: Event) {
-    const target = e.target;
-    if (!(target instanceof Element)) return;
-
-    const trigger = target.closest('[data-accordion-trigger]');
-    if (!trigger) return;
-
-    const root = trigger.closest('[data-mobile-panel]');
-    if (!root) return;
-
-    const id = trigger.getAttribute('data-accordion-trigger');
-    if (!id) return;
-
-    const panel = root.querySelector(`[data-accordion-panel="${id}"]`);
-    if (panel) panel.classList.toggle('hidden');
-  }
-
-  function initMobileAccordion() {
+  registerPageInit('mobileAccordion', () => {
     const root = document.querySelector('[data-mobile-panel]');
     if (!root) return;
 
-    // 移除旧的事件监听器（如果有）
-    root.removeEventListener('click', handleAccordionClick);
+    function handleAccordionClick(e: Event) {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
 
-    // 添加新的事件监听器
+      const trigger = target.closest('[data-accordion-trigger]');
+      if (!trigger) return;
+
+      const id = trigger.getAttribute('data-accordion-trigger');
+      if (!id) return;
+
+      const panel = root.querySelector(`[data-accordion-panel="${id}"]`);
+      if (panel) panel.classList.toggle('hidden');
+    }
+
     root.addEventListener('click', handleAccordionClick);
 
-    // 返回清理函数
+    // Return cleanup function
     return () => {
       root.removeEventListener('click', handleAccordionClick);
     };
-  }
-
-  registerPageInit('mobileAccordion', initMobileAccordion);
+  });
 </script>

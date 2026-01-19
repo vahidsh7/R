@@ -3,6 +3,302 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ========================================
+   Tailwind Custom Theme Extensions
+   ======================================== */
+
+@theme {
+  /* Custom animation - card scale effect */
+  --animate-scale-up: scale-up 0.3s ease forwards;
+
+  /* Custom transition duration */
+  --transition-timing-glass: 300ms;
+}
+
+/* Custom keyframe animations */
+@keyframes scale-up {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes scale-down {
+  from {
+    transform: scale(1.02);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Fade-in-up animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade-in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animation utility classes */
+.animate-scale-up {
+  animation: scale-up 0.3s ease forwards;
+}
+
+.animate-scale-down {
+  animation: scale-down 0.3s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease forwards;
+}
+
+/* ========================================
+   Ambilas Theme - Glassmorphism System
+   ======================================== */
+
+:root {
+  /* Glassmorphism base variables */
+  --glass-blur: 16px;
+  --glass-blur-sm: 8px;
+  --glass-blur-lg: 24px;
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-light: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+  /* Card content area glassmorphism */
+  --glass-content-bg: rgba(0, 0, 0, 0.4);
+  --glass-content-bg-hover: rgba(0, 0, 0, 0.5);
+
+  /* Transition duration */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+
+  /* Border radius system */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+
+  /* Card hover scale */
+  --card-hover-scale: 1.02;
+  --card-image-hover-scale: 1.05;
+}
+
+/* Dark mode variable adjustments */
+:root:where(.dark, .dark *) {
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-light: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+  --glass-content-bg: rgba(0, 0, 0, 0.5);
+  --glass-content-bg-hover: rgba(0, 0, 0, 0.6);
+}
+
+/* ========================================
+   Glassmorphism Utility Classes
+   ======================================== */
+
+/* Basic glassmorphism effect */
+.glass {
+  background: var(--glass-content-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.glass-sm {
+  background: var(--glass-content-bg);
+  backdrop-filter: blur(var(--glass-blur-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+}
+
+.glass-lg {
+  background: var(--glass-content-bg);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+}
+
+/* Glassmorphism border effect */
+.glass-border {
+  border: 1px solid var(--glass-border);
+}
+
+.glass-border-light {
+  border: 1px solid var(--glass-border-light);
+}
+
+/* Glassmorphism shadow */
+.glass-shadow {
+  box-shadow: var(--glass-shadow);
+}
+
+/* Combined effect: glassmorphism card */
+.glass-card {
+  background: var(--glass-content-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  transition:
+    transform var(--transition-normal) ease,
+    box-shadow var(--transition-normal) ease,
+    background-color var(--transition-normal) ease;
+}
+
+.glass-card:hover {
+  box-shadow: var(--glass-shadow-hover);
+  background: var(--glass-content-bg-hover);
+}
+
+/* ========================================
+   Card Hover Animations
+   ======================================== */
+
+/* Card container hover effect */
+.card-hover {
+  transition: transform var(--transition-normal) ease;
+}
+
+.card-hover:hover {
+  transform: scale(var(--card-hover-scale));
+}
+
+/* Card image hover effect */
+.card-image-hover {
+  overflow: hidden;
+}
+
+.card-image-hover img {
+  transition: transform var(--transition-slow) ease;
+}
+
+.card-image-hover:hover img {
+  transform: scale(var(--card-image-hover-scale));
+}
+
+/* ========================================
+   Card Image Fill Fix
+   ======================================== */
+
+/* Ensure picture elements and their child img properly fill the container */
+.post-card picture,
+.post-card-desc picture,
+.post-card-horizontal picture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.post-card picture img,
+.post-card-desc picture img,
+.post-card-horizontal picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ========================================
+   Category Tag Color System
+   ======================================== */
+
+/* Category tag base styles */
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+  transition: opacity var(--transition-fast) ease;
+}
+
+.category-tag:hover {
+  opacity: 0.9;
+}
+
+/* Category colors - using CSS custom properties for dynamic setting */
+.category-tag[data-category="technology"],
+.category-tag[data-category="tech"] {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+.category-tag[data-category="lifestyle"],
+.category-tag[data-category="life"] {
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+  color: white;
+}
+
+.category-tag[data-category="business"],
+.category-tag[data-category="finance"] {
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  color: white;
+}
+
+.category-tag[data-category="travel"] {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: white;
+}
+
+.category-tag[data-category="food"] {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.category-tag[data-category="health"] {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.category-tag[data-category="art"],
+.category-tag[data-category="design"] {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  color: white;
+}
+
+.category-tag[data-category="music"] {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+}
+
+/* Default category color */
+.category-tag:not([data-category]) {
+  background: linear-gradient(135deg, #64748b, #475569);
+  color: white;
+}
+
 html {
   text-autospace: normal;
 }
@@ -19,6 +315,11 @@ body {
     sans-serif;
 }
 
+/* ========================================
+   Skeleton Screen Global Styles
+   ======================================== */
+
+/* Skeleton base styles (fallback) */
 .skeleton {
   background-color: #f0f0f0;
   border-radius: 0.5rem;
@@ -29,22 +330,31 @@ body {
   background-color: #2a2a2a;
 }
 
+/* Pulse animation (fallback) */
 @keyframes skeleton-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
 }
 
+/* ========================================
+   Lazy Loading Image Global Styles
+   ======================================== */
 
+/* Lazy image wrapper container */
 .lazy-image-wrapper {
   position: relative;
   overflow: hidden;
   display: block;
 }
 
+/* Blur placeholder styles */
 .blur-placeholder {
   filter: blur(20px);
   transform: scale(1.1);
@@ -55,10 +365,12 @@ body {
   opacity: 0;
 }
 
+/* Lazy image fade-in animation */
 @keyframes lazy-fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -68,6 +380,11 @@ body {
   animation: lazy-fade-in 400ms ease-out forwards;
 }
 
+/* ========================================
+   Accessibility Support
+   ======================================== */
+
+/* Respect user motion preference settings */
 @media (prefers-reduced-motion: reduce) {
   .skeleton {
     animation: none;
@@ -89,16 +406,98 @@ body {
   }
 
   @keyframes shimmer {
-    0%, 100% {
+
+    0%,
+    100% {
       background-position: 0% 0%;
     }
   }
 }
 
+/* ========================================
+   Performance Optimization Hints
+   ======================================== */
+
+/* Provide hints for elements about to animate */
 .will-animate {
   will-change: opacity, transform;
 }
 
+/* Remove hint after animation completes */
 .animation-complete {
   will-change: auto;
+}
+
+/* ========================================
+   Header Glassmorphism Styles
+   ======================================== */
+
+.header-glass {
+  position: relative;
+  z-index: 50;
+  background: var(--glass-content-bg);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  /* border-bottom removed */
+}
+
+/* Light mode header styles */
+:root:not(.dark) .header-glass {
+  background: rgba(255, 255, 255, 0.85);
+  /* border-bottom removed */
+}
+
+/* ========================================
+   Navigation Link Styles
+   ======================================== */
+
+/* Navigation link underline animation */
+.nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color var(--transition-fast) ease;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: all var(--transition-normal) ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Light mode navigation link styles */
+:root:not(.dark) .nav-link {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+:root:not(.dark) .nav-link:hover {
+  color: black;
+}
+
+/* Header dropdown menu glassmorphism */
+.nav-dropdown {
+  background: var(--glass-content-bg);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--glass-shadow);
+}
+
+:root:not(.dark) .nav-dropdown {
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
 }

@@ -28,7 +28,7 @@ const avatar = entry?.data.avatar || (fallbackAvatar as any);
 
 function iconFor(label: string, url: string): string {
   const k = String(label || '').toLowerCase();
-  if (k === 'x' || k === 'twitter') return 'lucide:twitter';
+  if (k === 'x' || k === 'twitter') return 'lucide:x';
   if (k === 'github') return 'lucide:github';
   if (k === 'rss' || url.endsWith('.xml')) return 'lucide:rss';
   if (k === 'website' || /^https?:\/\/.*/.test(url)) return 'lucide:globe';
@@ -79,6 +79,7 @@ const years = [currentYear, currentYear - 1, currentYear - 2];
             class="h-32 w-32 rounded-full object-cover ring-2 ring-neutral-200 sm:h-40 sm:w-40 dark:ring-neutral-700"
             layout="fixed"
             fit="cover"
+            rounded={false}
           />
         </div>
 
@@ -253,17 +254,17 @@ const years = [currentYear, currentYear - 1, currentYear - 2];
       });
     }
 
-    // 移除旧的事件监听器
+    // Remove old event listeners
     yearButtons.forEach((button) => {
       button.removeEventListener('click', handleYearClick);
     });
 
-    // 添加新的事件监听器
+    // Add new event listeners
     yearButtons.forEach((button) => {
       button.addEventListener('click', handleYearClick);
     });
 
-    // 返回清理函数
+    // Return cleanup function
     return () => {
       yearButtons.forEach((button) => {
         button.removeEventListener('click', handleYearClick);

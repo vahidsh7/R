@@ -28,56 +28,69 @@ const rssUrl: string =
   (Astro.props.rssUrl as string | undefined) ?? getRelativeLocaleUrl(resolvedLang, '/rss.xml');
 ---
 
-<footer class="w-full bg-white dark:bg-neutral-950">
+<footer class="header-glass mb-6 w-full">
   <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-      <div class="md:col-span-1">
-        <a
-          href={getRelativeLocaleUrl(resolvedLang, '/')}
-          class="inline-flex items-center gap-2 text-xl font-semibold tracking-tight text-neutral-900 hover:opacity-90 dark:text-neutral-100"
-        >
-          <span
-            class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-xl text-transparent"
+      <div class="flex flex-col md:col-span-1">
+        <div>
+          <a
+            href={getRelativeLocaleUrl(resolvedLang, '/')}
+            class="inline-flex items-center gap-2 text-xl font-semibold tracking-tight text-neutral-900 transition-opacity hover:opacity-80 dark:text-neutral-100"
           >
+            <span class="text-xl text-neutral-900 dark:text-neutral-300">
+              {siteName}
+            </span>
+          </a>
+          <div class="mt-4 flex items-center gap-4 text-sm">
+            <a
+              href={xUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 rounded-md p-2 text-neutral-600 transition-all hover:bg-black/5 hover:text-black dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <span aria-hidden="true"><Icon name="lucide:x" class="h-5 w-5" /></span>
+              <span class="sr-only">X</span>
+            </a>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 rounded-md p-2 text-neutral-600 transition-all hover:bg-black/5 hover:text-black dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <span aria-hidden="true"><Github class="h-5 w-5" /></span>
+              <span class="sr-only">GitHub</span>
+            </a>
+            <a
+              href={rssUrl}
+              class="inline-flex items-center gap-1 rounded-md p-2 text-neutral-600 transition-all hover:bg-black/5 hover:text-black dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <span aria-hidden="true"><Icon name="lucide:rss" class="h-5 w-5" /></span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Desktop/Tablet: Copyright below social icons - pushed to bottom */}
+        <div
+          class="mt-auto hidden flex-row items-end gap-2 text-[10px] text-neutral-500 md:flex dark:text-neutral-400"
+        >
+          <span>
+            &copy; {new Date().getFullYear()}
             {siteName}
           </span>
-        </a>
-        <div class="mt-4 flex items-center gap-6 text-sm">
-          <a
-            href={xUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
-          >
-            <span aria-hidden="true"><Icon name="lucide:twitter" class="h-5 w-5" /></span>
-            <span class="sr-only">X</span>
-          </a>
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
-          >
-            <span aria-hidden="true"><Github class="h-5 w-5" /></span>
-            <span class="sr-only">GitHub</span>
-          </a>
-          <a
-            href={rssUrl}
-            class="inline-flex items-center gap-1 text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
-          >
-            <span aria-hidden="true"><Icon name="lucide:rss" class="h-5 w-5" /></span>
-            <span class="sr-only">RSS</span>
-          </a>
         </div>
       </div>
 
       <FooterNav lang={resolvedLang} />
     </div>
 
-    <div class="mt-10 text-xs text-neutral-500 dark:text-neutral-400">
+    {/* Mobile only: Copyright at bottom center */}
+    <div
+      class="mt-10 flex flex-row items-center justify-center gap-2 text-[10px] text-neutral-500 md:hidden dark:text-neutral-400"
+    >
       <span>
         &copy; {new Date().getFullYear()}
-        {siteName}. {t(resolvedLang, 'footer.allRightsReserved')}
+        {siteName}
       </span>
     </div>
   </div>

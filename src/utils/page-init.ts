@@ -1,17 +1,17 @@
 /**
- * 全局页面初始化管理器
+ * Global Page Initialization Manager
  * 
- * 统一管理 Astro View Transitions 的页面初始化逻辑，
- * 确保在页面加载和导航时正确初始化组件。
+ * Unified management for Astro View Transitions page initialization logic,
+ * ensuring components are correctly initialized during page load and navigation.
  * 
  * @example
  * ```typescript
  * import { registerPageInit } from '@/utils/page-init';
  * 
- * // 注册初始化函数
+ * // Register initialization function
  * registerPageInit('themeSwitcher', () => {
  *   const buttons = document.querySelectorAll('[data-theme]');
- *   // ... 初始化逻辑
+ *   // ... initialization logic
  * });
  * ```
  */
@@ -36,19 +36,19 @@ class PageInitManager {
     private setup(): void {
         if (typeof window === 'undefined') return;
 
-        // 首次加载时初始化
+        // Initialize on first load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.runAllInits());
         } else {
             this.runAllInits();
         }
 
-        // Astro 视图转换时重新初始化
+        // Re-initialize on Astro view transitions
         document.addEventListener('astro:page-load', () => {
             this.runAllInits();
         });
 
-        // 页面切换前清理
+        // Cleanup before page transition
         document.addEventListener('astro:before-preparation', () => {
             this.runAllCleanups();
         });
@@ -65,7 +65,7 @@ class PageInitManager {
         name: string,
         init: InitFunction,
         options?: {
-            /** 是否立即执行（如果页面已加载） */
+            /** Whether to execute immediately (if page is already loaded) */
             immediate?: boolean;
         }
     ): void {
@@ -77,7 +77,7 @@ class PageInitManager {
 
         this.handlers.set(name, { init });
 
-        // 如果页面已初始化且设置了立即执行，则立即运行
+        // If page is already initialized and immediate execution is set, run now
         if (this.initialized && options?.immediate) {
             this.runInit(name);
         }
@@ -102,17 +102,17 @@ class PageInitManager {
         if (!handler) return;
 
         try {
-            // 先清理之前的实例（如果有）
+            // Clean up previous instance first (if any)
             const existingCleanup = this.cleanupFunctions.get(name);
             if (existingCleanup) {
                 existingCleanup();
                 this.cleanupFunctions.delete(name);
             }
 
-            // 执行初始化
+            // Execute initialization
             const result = handler.init();
 
-            // 如果返回了清理函数，保存起来
+            // If a cleanup function was returned, save it
             if (typeof result === 'function') {
                 this.cleanupFunctions.set(name, result);
             }
@@ -147,35 +147,35 @@ class PageInitManager {
     }
 }
 
-// 创建全局单例
+// Create global singleton
 const pageInitManager = new PageInitManager();
 
 /**
- * 注册页面初始化函数
+ * Register page initialization function
  * 
- * 该函数会在以下时机执行：
- * 1. 页面首次加载完成时（DOMContentLoaded）
- * 2. Astro 视图转换后（astro:page-load）
+ * This function will be executed at the following times:
+ * 1. When the page first loads (DOMContentLoaded)
+ * 2. After Astro view transitions (astro:page-load)
  * 
- * @param name - 唯一标识符，用于管理和调试
- * @param init - 初始化函数，可选返回清理函数
- * @param options - 配置选项
+ * @param name - Unique identifier for management and debugging
+ * @param init - Initialization function, optionally returns a cleanup function
+ * @param options - Configuration options
  * 
  * @example
  * ```typescript
- * // 基本用法
+ * // Basic usage
  * registerPageInit('myComponent', () => {
  *   const element = document.querySelector('#my-element');
  *   element?.addEventListener('click', handleClick);
  * });
  * 
- * // 带清理函数
+ * // With cleanup function
  * registerPageInit('myComponent', () => {
  *   const element = document.querySelector('#my-element');
  *   const handler = () => console.log('clicked');
  *   element?.addEventListener('click', handler);
  *   
- *   // 返回清理函数
+ *   // Return cleanup function
  *   return () => {
  *     element?.removeEventListener('click', handler);
  *   };
@@ -206,5 +206,5 @@ export function getRegisteredInits(): string[] {
     return pageInitManager.getRegisteredHandlers();
 }
 
-// 导出类型供外部使用
+// Export types for external use
 export type { InitFunction, CleanupFunction };
