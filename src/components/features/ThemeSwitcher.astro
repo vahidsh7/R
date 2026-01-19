@@ -135,11 +135,31 @@ const THEME_OPTIONS = [
     const initialTheme: 'light' | 'dark' | 'system' = storedPref ?? 'system';
     setTheme(initialTheme);
 
+    // Handle mouse leave to auto-close dropdown
+    let closeTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    function handleMouseLeave() {
+      closeTimeout = setTimeout(() => {
+        if (themeRoot instanceof HTMLDetailsElement) {
+          themeRoot.open = false;
+        }
+      }, 150);
+    }
+
+    function handleMouseEnter() {
+      if (closeTimeout) {
+        clearTimeout(closeTimeout);
+        closeTimeout = null;
+      }
+    }
+
     // Bind events
     systemThemeMediaQuery.addEventListener('change', handleSystemThemeChange);
     themeButtons.forEach((button) => {
       button.addEventListener('click', handleThemeChange);
     });
+    themeRoot.addEventListener('mouseleave', handleMouseLeave);
+    themeRoot.addEventListener('mouseenter', handleMouseEnter);
 
     // Return cleanup function
     return () => {
@@ -147,6 +167,9 @@ const THEME_OPTIONS = [
       themeButtons.forEach((button) => {
         button.removeEventListener('click', handleThemeChange);
       });
+      themeRoot.removeEventListener('mouseleave', handleMouseLeave);
+      themeRoot.removeEventListener('mouseenter', handleMouseEnter);
+      if (closeTimeout) clearTimeout(closeTimeout);
     };
   });
 </script>

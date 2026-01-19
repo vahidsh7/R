@@ -53,6 +53,41 @@ const currentFlag = FLAG_MAP[resolvedLang] ?? '🌐';
   </div>
 </details>
 
+<script>
+  import { registerPageInit } from '@/utils/page-init';
+
+  registerPageInit('languageSwitcher', () => {
+    const langRoot = document.querySelector('[data-lang-root]');
+    if (!langRoot) return;
+
+    let closeTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    function handleMouseLeave() {
+      closeTimeout = setTimeout(() => {
+        if (langRoot instanceof HTMLDetailsElement) {
+          langRoot.open = false;
+        }
+      }, 150);
+    }
+
+    function handleMouseEnter() {
+      if (closeTimeout) {
+        clearTimeout(closeTimeout);
+        closeTimeout = null;
+      }
+    }
+
+    langRoot.addEventListener('mouseleave', handleMouseLeave);
+    langRoot.addEventListener('mouseenter', handleMouseEnter);
+
+    return () => {
+      langRoot.removeEventListener('mouseleave', handleMouseLeave);
+      langRoot.removeEventListener('mouseenter', handleMouseEnter);
+      if (closeTimeout) clearTimeout(closeTimeout);
+    };
+  });
+</script>
+
 <style>
   details[data-lang-root] > summary::-webkit-details-marker {
     display: none;
