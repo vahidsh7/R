@@ -15,16 +15,16 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
 const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
 ---
 
-<div class={`lg:hidden hidden glass ${className ?? ''}`.trim()} data-mobile-panel>
+<div class={`lg:hidden hidden mobile-nav-glass ${className ?? ''}`.trim()} data-mobile-panel>
   <div class="mx-auto max-w-6xl px-4 py-3 sm:px-6">
-    <div class="space-y-2">
+    <div class="space-y-1">
       {
         NAV_ITEMS.map((item, i) =>
           item.tags && item.tags.length > 0 ? (
-            <div class="overflow-hidden rounded-lg border border-white/10">
+            <div class="overflow-hidden rounded-sm">
               <button
                 type="button"
-                class={`flex w-full items-center justify-between bg-white/5 px-3 py-2.5 ${alignmentClass} text-sm font-semibold text-neutral-100`}
+                class={`flex w-full items-center justify-between rounded-sm px-2.5 py-1.5 ${alignmentClass} text-sm font-medium text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white`}
                 data-accordion-trigger={`m-${i}`}
               >
                 <span>{t(resolvedLang, `navigation.${item.key}`)}</span>
@@ -41,18 +41,18 @@ const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
                   />
                 </svg>
               </button>
-              <div class="hidden bg-white/5 px-3 py-2" data-accordion-panel={`m-${i}`}>
+              <div class="hidden px-2.5 py-1" data-accordion-panel={`m-${i}`}>
                 <a
                   href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
-                  class="block rounded px-2 py-1.5 text-sm text-neutral-300 transition-colors hover:bg-white/10 hover:text-white"
+                  class="block rounded-sm px-2.5 py-1.5 text-sm text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
                 >
                   {t(resolvedLang, `navigation.${item.key}`)}
                 </a>
-                <div class="mt-1 space-y-1 border-t border-white/10 pt-2">
+                <div class="mt-1 space-y-1 border-t border-neutral-200 pt-1 dark:border-white/10">
                   {item.tags.map((tag) => (
                     <a
                       href={getRelativeLocaleUrl(resolvedLang, `/tags/${tag}`)}
-                      class="block rounded px-2 py-1.5 text-sm text-neutral-300 transition-colors hover:bg-white/10 hover:text-white"
+                      class="block rounded-sm px-2.5 py-1.5 text-sm text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
                     >
                       {t(resolvedLang, `tags.${tag}`)}
                     </a>
@@ -63,7 +63,7 @@ const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
           ) : (
             <a
               href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
-              class="block rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm font-semibold text-neutral-100 transition-colors hover:bg-white/10"
+              class="block rounded-sm px-2.5 py-1.5 text-sm font-medium text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
             >
               {t(resolvedLang, `navigation.${item.key}`)}
             </a>
@@ -97,7 +97,6 @@ const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
 
     root.addEventListener('click', handleAccordionClick);
 
-    // Return cleanup function
     return () => {
       root.removeEventListener('click', handleAccordionClick);
     };

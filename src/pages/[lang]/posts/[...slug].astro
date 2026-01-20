@@ -1,10 +1,11 @@
 ---
 import { getCollection, type CollectionEntry, render } from 'astro:content';
-import OptimizedPicture from '@/features/OptimizedPicture.astro';
 import ContentImage from '@/features/ContentImage.astro';
 import RelatedList from '@/widgets/RelatedList.astro';
 import PostLayout from '@/layouts/PostLayout.astro';
+import Prose from '@/features/Prose.astro';
 import type { Lang } from '@/utils/i18n';
+import Comment from '@/widgets/Comment.astro';
 import { DEFAULT_LANG, SUPPORTED_LANGS, toAbsolute } from '@/utils/i18n';
 
 export async function getStaticPaths() {
@@ -69,21 +70,11 @@ const postLayoutProps = {
 ---
 
 <PostLayout {...postLayoutProps}>
-  {
-    heroImage && (
-      <figure class="mx-auto mb-6 w-full max-w-4xl overflow-hidden rounded-lg shadow">
-        <OptimizedPicture
-          src={heroImage}
-          alt={heroImageAlt}
-          priority
-          fit="cover"
-          position="center"
-          class="h-auto w-full object-cover"
-          sizes="(max-width: 896px) 100vw, 896px"
-        />
-      </figure>
-    )
-  }
   <Content components={{ img: ContentImage }} />
+  <Prose lang={lang} slot="after">
+    <div class="not-prose">
+      <Comment lang={lang} path={Astro.url.pathname} />
+    </div>
+  </Prose>
   <RelatedList slot="after" lang={lang} category={entry.data.category} excludeId={entry.id} />
 </PostLayout>
