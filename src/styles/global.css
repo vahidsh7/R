@@ -8,6 +8,7 @@
    ======================================== */
 
 @theme {
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --animate-scale-up: scale-up 0.3s ease forwards;
   --animate-scale-down: scale-down 0.3s ease forwards;
   --animate-fade-in-up: fade-in-up 0.5s ease forwards;
