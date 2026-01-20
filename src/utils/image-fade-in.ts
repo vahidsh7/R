@@ -16,17 +16,16 @@ class ImageFadeIn {
         customSelectors: string[];
         excludeSelectors: string[];
     };
-    private imageCount: number = 0;
     private observedElements: WeakSet<HTMLElement> = new WeakSet();
     private debouncedObserve: (() => void) | null = null;
 
     constructor(options: FadeInOptions = {}) {
         this.options = {
             threshold: options.threshold ?? 0.1,
-            rootMargin: options.rootMargin ?? '0px 0px -80px 0px',
-            duration: options.duration ?? 800,
+            rootMargin: options.rootMargin ?? '0px 0px -20px 0px',
+            duration: options.duration ?? 400,
             delay: options.delay ?? 0,
-            stagger: options.stagger ?? 50,
+            stagger: options.stagger ?? 30,
             customSelectors: options.customSelectors ?? [],
             excludeSelectors: options.excludeSelectors ?? [],
             respectMotionPreference: options.respectMotionPreference ?? true,
@@ -52,10 +51,24 @@ class ImageFadeIn {
 
         this.observer = new IntersectionObserver(
             (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        this.fadeInElement(entry.target as HTMLElement);
-                    }
+                // Get all intersecting elements
+                const intersectingEntries = entries.filter((entry) => entry.isIntersecting);
+
+                if (intersectingEntries.length === 0) return;
+
+                // Sort by DOM order to ensure natural flow from top to bottom
+                intersectingEntries.sort((a, b) => {
+                    const pos = a.target.compareDocumentPosition(b.target);
+                    // If b follows a (4), then a comes first: return -1
+                    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+                    // If a follows b (2), then b comes first: return 1
+                    if (pos & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+                    return 0;
+                });
+
+                // Trigger animations with stagger based on batch index
+                intersectingEntries.forEach((entry, index) => {
+                    this.fadeInElement(entry.target as HTMLElement, index);
                 });
             },
             {
@@ -88,7 +101,6 @@ class ImageFadeIn {
     }
 
     private isWithinAnimatedContainer(element: HTMLElement): boolean {
-        // Check if element is within a card container that has already been marked for fade-in
         const container = element.closest('.grid > div, .group, .curriculum-item, .architecture-layer, [data-card-container]');
         return !!(container && container.hasAttribute('data-fade-observed'));
     }
@@ -106,7 +118,6 @@ class ImageFadeIn {
         containers.forEach((container) => {
             if (this.observedElements.has(container)) return;
 
-            // Check if in viewport, elements in viewport don't need animation
             const rect = container.getBoundingClientRect();
             const isInViewport = (
                 rect.top >= 0 &&
@@ -119,7 +130,6 @@ class ImageFadeIn {
                 return;
             }
 
-            // Mark container as card container
             container.setAttribute('data-card-container', 'true');
 
             this.observedElements.add(container);
@@ -146,7 +156,6 @@ class ImageFadeIn {
             // Skip if already observed
             if (this.observedElements.has(img)) return;
 
-            // Skip if within an already animated container
             if (this.isWithinAnimatedContainer(img)) {
                 this.observedElements.add(img);
                 img.setAttribute('data-fade-observed', 'true');
@@ -247,7 +256,6 @@ class ImageFadeIn {
 
         element.style.transition = `opacity ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
         element.style.willChange = 'opacity, transform';
-        element.setAttribute('data-fade-index', String(this.imageCount++));
     }
 
     private observeTextElements(): void {
@@ -272,7 +280,6 @@ class ImageFadeIn {
         textElements.forEach((element) => {
             if (this.observedElements.has(element)) return;
 
-            // Skip if within an already animated container
             if (this.isWithinAnimatedContainer(element)) {
                 this.observedElements.add(element);
                 element.setAttribute('data-fade-observed', 'true');
@@ -282,13 +289,12 @@ class ImageFadeIn {
             this.observedElements.add(element);
             element.setAttribute('data-fade-observed', 'true');
 
-            // Check if in article content area - all text in article area should not fade in
             const isInArticle = element.closest('.prose, [data-article-content]');
             if (isInArticle) {
-                return; // Text elements in article content area should not fade in
+                return;
             }
 
-            // Check navigation area
+
             const parent = element.closest('header, nav, footer, [role="navigation"]');
             if (parent) {
                 return;
@@ -306,12 +312,7 @@ class ImageFadeIn {
                 return;
             }
 
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = `opacity 600ms cubic-bezier(0.4, 0, 0.2, 1), transform 600ms cubic-bezier(0.4, 0, 0.2, 1)`;
-            element.style.willChange = 'opacity, transform';
-            element.setAttribute('data-fade-index', String(this.imageCount++));
-
+            this.prepareElement(element);
             this.observer!.observe(element);
         });
     }
@@ -340,15 +341,13 @@ class ImageFadeIn {
         });
     }
 
-    private fadeInElement(element: HTMLElement): void {
+    private fadeInElement(element: HTMLElement, batchIndex: number = 0): void {
         if (!this.observer) return;
-
-        const fadeIndex = parseInt(element.getAttribute('data-fade-index') || '0', 10);
 
         // Check for custom delay
         const customDelay = element.getAttribute('data-fade-delay');
         const baseDelay = customDelay ? parseInt(customDelay, 10) : this.options.delay;
-        const staggerDelay = fadeIndex * this.options.stagger;
+        const staggerDelay = batchIndex * this.options.stagger;
         const totalDelay = baseDelay + staggerDelay;
 
         // Get duration for cleanup timing
@@ -361,7 +360,6 @@ class ImageFadeIn {
 
             setTimeout(() => {
                 this.observer?.unobserve(element);
-                element.removeAttribute('data-fade-index');
                 element.style.willChange = 'auto';
                 element.style.transition = '';
                 element.style.transform = '';
@@ -405,7 +403,6 @@ class ImageFadeIn {
     }
 
     public reinit(): void {
-        this.imageCount = 0;
         this.observeCardContainers();
         this.observeImages();
         this.observeTextElements();
@@ -429,14 +426,13 @@ if (typeof window !== 'undefined') {
         registerPageInit('imageFadeIn', () => {
             const fadeInInstance = new ImageFadeIn({
                 threshold: 0.1,
-                rootMargin: '0px 0px -80px 0px',
-                duration: 800,
+                rootMargin: '0px 0px -20px 0px',
+                duration: 400,
                 delay: 0,
-                stagger: 50,
+                stagger: 30,
                 respectMotionPreference: true,
             });
 
-            // Return cleanup function
             return () => {
                 fadeInInstance.destroy();
             };
