@@ -9,10 +9,12 @@
 
 A professional, multilingual photo-and-prose theme built with **Astro 5** and **Tailwind CSS 4**. Start your global storytelling journey with per-locale routes, centralized dictionaries, SEO optimization, and a modern, responsive design.
 
-[Live Demo](https://astrology-i18n.vercel.app/) · [Report Bug](https://github.com/yourusername/Astrology-i18n/issues) · [Request Feature](https://github.com/yourusername/Astrology-i18n/issues)
-
-<img src="public/screenshot.webp" alt="Astrology-i18n Screenshot" width="100%" />
-
+<div align="center">
+  <p>
+    <a href="https://pagespeed.web.dev/analysis/https-astrology-yo7bu6q1-edgeone-app/nij513nbyr?form_factor=mobile">
+      <img src="public/astrology-i18n-lighthouse-score.svg" alt="Lighthouse Score" width="300" />
+    </a>
+  </p>
 </div>
 
 ## ⚡️ Highlights
@@ -35,7 +37,7 @@ A professional, multilingual photo-and-prose theme built with **Astro 5** and **
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/Astrology-i18n.git
+    git clone https://github.com/idimilabs/Astrology-i18n.git
     cd Astrology-i18n
     ```
 
@@ -82,8 +84,7 @@ A quick look at the top-level files and directories you'll work with:
 │   ├── styles/             # Global styles (CSS variables, resets)
 │   ├── utils/              # Helper functions (i18n, formatting)
 │   └── content.config.ts   # Content collections definition
-├── astro.config.mjs        # Astro configuration
-└── tailwind.config.mjs     # Tailwind configuration
+└── astro.config.mjs        # Astro configuration
 ```
 
 ## 🌍 Internationalization (i18n)
@@ -155,10 +156,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <div align="center">
-  <p>
-    <a href="https://pagespeed.web.dev/analysis/https-astrology-yo7bu6q1-edgeone-app/nij513nbyr?form_factor=mobile">
-      <img src="public/astrology-i18n-lighthouse-score.svg" alt="Lighthouse Score" width="300" />
-    </a>
-  </p>
   <p>Built with ❤️ by <a href="https://idimi.com">iDiMi</a></p>
 </div>
