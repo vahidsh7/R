@@ -24,7 +24,7 @@ const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
             <div class="overflow-hidden rounded-sm">
               <button
                 type="button"
-                class={`flex w-full items-center justify-between rounded-sm px-2.5 py-1.5 ${alignmentClass} text-sm font-medium text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white`}
+                class={`flex w-full items-center justify-between rounded-sm px-2.5 py-1.5 ${alignmentClass} text-sm font-medium text-neutral-700 transition-colors hover:bg-black/20 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white`}
                 data-accordion-trigger={`m-${i}`}
               >
                 <span>{t(resolvedLang, `navigation.${item.key}`)}</span>
@@ -44,7 +44,7 @@ const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
               <div class="hidden px-2.5 py-1" data-accordion-panel={`m-${i}`}>
                 <a
                   href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
-                  class="block rounded-sm px-2.5 py-1.5 text-sm text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
+                  class="block rounded-sm px-2.5 py-1.5 text-sm text-neutral-700 transition-colors hover:bg-black/20 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
                 >
                   {t(resolvedLang, `navigation.${item.key}`)}
                 </a>
@@ -52,7 +52,7 @@ const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
                   {item.tags.map((tag) => (
                     <a
                       href={getRelativeLocaleUrl(resolvedLang, `/tags/${tag}`)}
-                      class="block rounded-sm px-2.5 py-1.5 text-sm text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
+                      class="block rounded-sm px-2.5 py-1.5 text-sm text-neutral-700 transition-colors hover:bg-black/20 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
                     >
                       {t(resolvedLang, `tags.${tag}`)}
                     </a>
@@ -63,7 +63,7 @@ const alignmentClass = resolvedLang === 'ar' ? 'text-right' : 'text-left';
           ) : (
             <a
               href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
-              class="block rounded-sm px-2.5 py-1.5 text-sm font-medium text-neutral-700 transition-colors hover:bg-black/20 hover:text-black dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
+              class="block rounded-sm px-2.5 py-1.5 text-sm font-medium text-neutral-700 transition-colors hover:bg-black/20 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white"
             >
               {t(resolvedLang, `navigation.${item.key}`)}
             </a>
