@@ -1,13 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "automerge": true,
-  "platformAutomerge": true,
+  "extends": [
+    "config:recommended",
+    ":pnpm"
+  ],
   "dependencyDashboard": true,
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],
-      "groupName": "All Dependencies"
+      "groupName": "All Dependencies",
+      "automerge": true,
+      "automergeType": "branch",
+      "rebaseWhen": "behind-base-branch"
     }
-  ]
+  ],
+  "platformAutomerge": true,
+  "timezone": "Asia/Shanghai"
 }
