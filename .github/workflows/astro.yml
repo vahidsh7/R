@@ -33,12 +33,11 @@ jobs:
         with:
           node-version: "20"
           # Cache is handled by the pnpm action below
-
-      # 2. CRITICAL: Install and set up pnpm
+      
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 8 # Matches your local version. Run `pnpm --version` to check.
+      # version: 8 # ← This line is now commented out/removed
           run_install: false
 
       # 3. Get the correct cache directory for pnpm and set it up
