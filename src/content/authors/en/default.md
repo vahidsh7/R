@@ -1,5 +1,5 @@
 ---
-name: "Astro"
+name: "Vahid"
 bio: "Sailing through life, entrepreneurship waves, and investing fog."
 socials:
   - { label: "X", url: "https://x.com/idimilabs" }
