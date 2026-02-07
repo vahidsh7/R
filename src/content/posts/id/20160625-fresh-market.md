@@ -6,7 +6,7 @@ tags:
   - "Strategi"
 pubDate: 2024-10-25
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1519996529931-28324d5a630e"
 heroImageAlt: "Deskripsi gambar placeholder"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: id
 
 Ini adalah artikel placeholder yang mendemonstrasikan berbagai elemen Markdown.
 
-![Gambar Placeholder](/images/author.avif
+![Gambar Placeholder](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## Konten Utama
 

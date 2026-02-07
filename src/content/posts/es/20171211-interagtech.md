@@ -6,7 +6,7 @@ tags:
   - "Estrategia"
 pubDate: 2024-09-11
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1508614589041-895b88991e3e"
 heroImageAlt: "Descripción de imagen de marcador de posición"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: es
 
 Este es un artículo de marcador de posición que demuestra varios elementos de Markdown.
 
-![Imagen de marcador de posición](/images/author.avif
+![Imagen de marcador de posición](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## Contenido Principal
 

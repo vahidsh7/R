@@ -6,7 +6,7 @@ tags:
   - "策略"
 pubDate: 2024-06-28
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae"
 heroImageAlt: "占位符图片背景描述"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: zh
 
 这是一篇展示各种 Markdown 元素的占位符文章。
 
-![占位符图片](/images/author.avif
+![占位符图片](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## 主要内容
 

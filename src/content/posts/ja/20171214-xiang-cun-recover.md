@@ -6,7 +6,7 @@ tags:
   - "戦略"
 pubDate: 2024-12-14
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1559827291-72ee739d0d9a"
 heroImageAlt: "プレースホルダー画像の説明"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: ja
 
 これは様々なMarkdown要素を示すプレースホルダー記事です。
 
-![プレースホルダー画像](/images/author.avif
+![プレースホルダー画像](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## メインコンテンツ
 

@@ -6,7 +6,7 @@ tags:
   - "Strategie"
 pubDate: 2024-12-23
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d"
 heroImageAlt: "Platzhalter Bildbeschreibung"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: de
 
 Dies ist ein Platzhalter-Artikel, der verschiedene Markdown-Elemente demonstriert.
 
-![Platzhalter Bild](/images/author.avif
+![Platzhalter Bild](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## Hauptinhalt
 

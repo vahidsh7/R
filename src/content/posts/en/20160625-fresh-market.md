@@ -6,7 +6,7 @@ tags:
   - "Strategy"
 pubDate: 2024-10-25
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1519996529931-28324d5a630e"
 heroImageAlt: "Placeholder image description"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: en
 
 This is a placeholder article demonstrating various Markdown elements.
 
-![Placeholder Image](/images/author.avif
+![Placeholder Image](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## Main Content
 

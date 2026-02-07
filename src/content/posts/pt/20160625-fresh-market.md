@@ -6,7 +6,7 @@ tags:
   - "Estratégia"
 pubDate: 2024-10-25
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1519996529931-28324d5a630e"
 heroImageAlt: "Descrição da imagem do espaço reservado"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: pt
 
 Este é um artigo de espaço reservado demonstrando vários elementos Markdown.
 
-![Imagem de espaço reservado](/images/author.avif
+![Imagem de espaço reservado](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## Conteúdo Principal
 

@@ -6,7 +6,7 @@ tags:
   - "Стратегия"
 pubDate: 2024-06-28
 author: "Astro"
-heroImage: "/images/author.avif"
+heroImage: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae"
 heroImageAlt: "Описание изображения-заполнителя"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: ru
 
 Это статья-заполнитель, демонстрирующая различные элементы Markdown.
 
-![Изображение-заполнитель](/images/author.avif
+![Изображение-заполнитель](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
 
 ## Основное Содержание
 
