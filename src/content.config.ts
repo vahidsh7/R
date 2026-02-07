@@ -15,7 +15,7 @@ const post = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     author: z.string().default('Astro'),
-    heroImage: z.string().url(),
+    heroImage: z.string(),
     heroImageAlt: z.string(),
     locales: z.enum(LANGS),
     draft: z.boolean().default(false),

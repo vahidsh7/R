@@ -6,7 +6,7 @@ tags:
   - "전략"
 pubDate: 2024-12-24
 author: "Astro"
-heroImage: "https://images.unsplash.com/photo-1611162617474-5b21e879e113"
+heroImage: "/images/author.avif"
 heroImageAlt: "자리 표시자 이미지 설명"
 draft: false
 featured: false
@@ -17,7 +17,7 @@ locales: ko
 
 다양한 Markdown 요소를 보여주는 자리 표시자 기사입니다.
 
-![자리 표시자 이미지](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
+![자리 표시자 이미지](/images/author.avif
 
 ## 주요 내용
 
