@@ -66,7 +66,12 @@ jobs:
 
       # 6. Build with Astro using pnpm
       - name: Build with Astro
+<<<<<<< HEAD
         run: pnpm run build # Remove the --site and --base flags
+=======
+        run: pnpm run build -- --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
+        # If your project is in a subfolder, add: working-directory: ${{ env.BUILD_PATH }}
+>>>>>>> parent of 9ddd013 (Update astro.yml)
 
       # 7. Upload the built site
       - name: Upload artifact
