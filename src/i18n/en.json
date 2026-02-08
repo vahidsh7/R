@@ -2,7 +2,7 @@
   "site": {
     "name": "Vahid",
     "titleTemplate": "%s · Vahid",
-    "description": "Personal blog of Vahid",
+    "description": "",
     "twitter": {
       "site": "@idimilabs",
       "creator": "@Astro"
@@ -44,8 +44,8 @@
   "headings": {
     "home": {
       "title": "Home",
-      "h1": "Astrology",
-      "h2": "Navigating life, entrepreneurship, and the fog of investing"
+      "h1": "Vahid",
+      "h2": "Personal blog of Vahidg"
     },
     "build": {
       "h1": "Build",
