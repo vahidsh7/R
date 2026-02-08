@@ -36,7 +36,7 @@ function countFor(key: (typeof TAG_KEYS)[number]) {
 const items = TAG_KEYS.map((key) => ({
   key,
   label: String(t(lang as any, `tags.${key}`)),
-  href: `${import.meta.env.BASE_URL}${lang}/tags/${key}/`,
+  href: `/${lang}/tags/${key}/`,
   count: countFor(key),
 }));
 

@@ -25,13 +25,13 @@ type Post = CollectionEntry<'post'>;
 function toUrl(entry: Post, lang: Lang): string {
   const idWithoutExt = entry.id.replace(/\.(md|mdx|markdown)$/i, '');
   const slug = idWithoutExt.replace(new RegExp(`^${lang}/`), '');
-  return `${import.meta.env.BASE_URL}${lang}/posts/${slug}/`;
+  return `/${lang}/posts/${slug}/`;
 }
 
 const lang = ((Astro.params.lang as Lang) || DEFAULT_LANG) as Lang;
 const pageParam = Astro.params.page as string | undefined;
 if (pageParam === '1') {
-  return Astro.redirect(`${import.meta.env.BASE_URL}${lang}/posts/`, 301);
+  return Astro.redirect(`/${lang}/posts/`, 301);
 }
 const { page } = Astro.props as { page: any };
 const items = (page?.data as Post[]) || [];

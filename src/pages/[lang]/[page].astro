@@ -27,7 +27,7 @@ type Post = CollectionEntry<'post'>;
 function toUrl(entry: Post, lang: Lang): string {
   const idWithoutExt = entry.id.replace(/\.(md|mdx|markdown)$/i, '');
   const slug = idWithoutExt.replace(new RegExp(`^${lang}/`), '');
-  return `${import.meta.env.BASE_URL}${lang}/posts/${slug}/`;
+  return `/${lang}/posts/${slug}/`;
 }
 
 const lang = ((Astro.params.lang as Lang) || DEFAULT_LANG) as Lang;
