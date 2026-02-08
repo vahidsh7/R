@@ -25,7 +25,7 @@ export async function generateRssForLang(lang: Lang, site: URL) {
     .slice(0, 5)
     .map(toItem);
 
-  const title = `Astrology · ${lang.toUpperCase()}`;
+  const title = `Vahid · ${lang.toUpperCase()}`;
   const description = t(lang, 'site.description');
 
   return rss({

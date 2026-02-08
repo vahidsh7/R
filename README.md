@@ -6,8 +6,8 @@
 
 A professional, multilingual photo-and-prose theme built with **Astro 5** and **Tailwind CSS 4**. Start your global storytelling journey with per-locale routes, centralized dictionaries, SEO optimization, and a modern, responsive design.
 
-<a href="https://pagespeed.web.dev/analysis/https-astrology-yo7bu6q1-edgeone-app/nij513nbyr?form_factor=mobile">
-  <img src="public/astrology-i18n-lighthouse-score.svg" alt="Lighthouse Score" width="300" />
+<a href="https://pagespeed.web.dev/analysis/https-Vahid-yo7bu6q1-edgeone-app/nij513nbyr?form_factor=mobile">
+  <img src="public/Vahid-i18n-lighthouse-score.svg" alt="Lighthouse Score" width="300" />
 </a>
 
 </div>
@@ -44,8 +44,8 @@ A professional, multilingual photo-and-prose theme built with **Astro 5** and **
 1.  Clone the repository:
 
     ```bash
-    git clone https://github.com/idimilabs/Astrology-i18n.git
-    cd Astrology-i18n
+    git clone https://github.com/idimilabs/Vahid-i18n.git
+    cd Vahid-i18n
     ```
 
 2.  Install dependencies:
@@ -97,7 +97,7 @@ A quick look at the top-level files and directories you'll work with:
 
 ## 🌍 Internationalization (i18n)
 
-**Astrology i18n** comes with pre-configured support for 10 languages:
+**Vahid i18n** comes with pre-configured support for 10 languages:
 `zh` (Default), `en`, `fr`, `es`, `ru`, `ja`, `ko`, `pt`, `de`, `id`.
 
 ### Adding a New Language

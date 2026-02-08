@@ -9,7 +9,10 @@ import { defineConfig } from 'astro/config';
 import { remarkModifiedTime } from './src/utils/remark-modified-time.mjs';
 
 export default defineConfig({
-  site: 'https://muctebanesiri.github.io/R',
+  // ✅ CORRECTED: Site should be the root domain, not including repository
+  site: 'https://vahid.mucteba.ir',
+  // ✅ CORRECTED: Base must match your repository name with trailing slash
+  base: '',
   trailingSlash: 'always',
 
   prefetch: {
@@ -26,10 +29,11 @@ export default defineConfig({
     routing: 'manual',
   },
 
+  // ✅ IMPORTANT: Remove unsplash from remote patterns to prevent fetch errors
   image: {
     responsiveStyles: true,
     layout: 'constrained',
-    remotePatterns: [{ protocol: 'https', hostname: '*.unsplash.com' }],
+    remotePatterns: [], // Empty array = no remote image fetching
   },
 
   markdown: {
