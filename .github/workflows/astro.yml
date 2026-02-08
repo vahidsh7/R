@@ -66,8 +66,7 @@ jobs:
 
       # 6. Build with Astro using pnpm
       - name: Build with Astro
-        run: pnpm run build -- --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
-        # If your project is in a subfolder, add: working-directory: ${{ env.BUILD_PATH }}
+        run: pnpm run build -- --site "https://muctebanesiri.github.io" --base "/R/"
 
       # 7. Upload the built site
       - name: Upload artifact
