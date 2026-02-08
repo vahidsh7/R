@@ -9,7 +9,7 @@ import { defineConfig } from 'astro/config';
 import { remarkModifiedTime } from './src/utils/remark-modified-time.mjs';
 
 export default defineConfig({
-  site: 'https://astrology-i18n.vercel.app',
+  site: 'https://muctebanesiri.github.io/R',
   trailingSlash: 'always',
 
   prefetch: {
