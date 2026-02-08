@@ -1,8 +1,8 @@
 {
   "site": {
-    "name": "Astrology",
-    "titleTemplate": "%s · Astrology",
-    "description": "Navigating life, entrepreneurship, and the fog of investing",
+    "name": "Vahid",
+    "titleTemplate": "%s · Vahid",
+    "description": "Personal blog of Vahid",
     "twitter": {
       "site": "@idimilabs",
       "creator": "@Astro"
