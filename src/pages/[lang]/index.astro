@@ -19,7 +19,7 @@ type Post = CollectionEntry<'post'>;
 function toUrl(entry: Post, lang: Lang): string {
   const idWithoutExt = entry.id.replace(/\.(md|mdx|markdown)$/i, '');
   const slug = idWithoutExt.replace(new RegExp(`^${lang}/`), '');
-  return `/${lang}/posts/${slug}/`;
+  return `${import.meta.env.BASE_URL}${lang}/posts/${slug}/`;
 }
 
 const PAGE_SIZE = 12;

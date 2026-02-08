@@ -7,7 +7,7 @@ function toItem(entry: CollectionEntry<'post'>) {
   const lang = entry.data.locales as Lang;
   const idWithoutExt = entry.id.replace(/\.(md|mdx|markdown)$/i, '');
   const slugWithoutLang = idWithoutExt.replace(new RegExp(`^${lang}/`), '');
-  const link = `/${lang}/posts/${slugWithoutLang}/`;
+  const link = `${import.meta.env.BASE_URL}${lang}/posts/${slugWithoutLang}/`;
 
   return {
     title: entry.data.title,
