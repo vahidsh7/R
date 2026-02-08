@@ -10,9 +10,9 @@ import { remarkModifiedTime } from './src/utils/remark-modified-time.mjs';
 
 export default defineConfig({
   // ✅ CORRECTED: Site should be the root domain, not including repository
-  site: 'https://muctebanesiri.github.io',
+  site: 'https://vahid.mucteba.ir',
   // ✅ CORRECTED: Base must match your repository name with trailing slash
-  base: '/R/',
+  base: '',
   trailingSlash: 'always',
 
   prefetch: {
