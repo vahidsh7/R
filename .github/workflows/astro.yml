@@ -1,0 +1,88 @@
+name: Deploy Astro site to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# Remove the `BUILD_PATH` env if your project is at the repository root.
+# If your Astro project is in a subfolder (like 'my-site'), set it accordingly.
+# env:
+#   BUILD_PATH: "my-site"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 1. Set up Node.js (without the problematic cache config)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          # Cache is handled by the pnpm action below
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+      # version: 8 # ← This line is now commented out/removed
+          run_install: false
+
+      # 3. Get the correct cache directory for pnpm and set it up
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # 4. Install dependencies using pnpm
+      - name: Install dependencies
+        run: pnpm install
+        # If your project is in a subfolder, add: working-directory: ${{ env.BUILD_PATH }}
+
+      # 5. Configure Pages
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      # 6. Build with Astro using pnpm
+      - name: Build with Astro
+        run: pnpm run build -- --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
+        # If your project is in a subfolder, add: working-directory: ${{ env.BUILD_PATH }}
+
+      # 7. Upload the built site
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist # Or: ${{ env.BUILD_PATH }}/dist if using subfolder
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
